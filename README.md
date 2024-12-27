@@ -1,0 +1,2 @@
+# zaverecny_projekt_ZPRO_FJFI
+Repozitář závěrečného zápočtového projektu
