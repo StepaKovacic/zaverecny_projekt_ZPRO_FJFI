@@ -2,5 +2,7 @@
 
 ## Zapnutí
 
-`echo "Do inicializačního řádku progremeu napište [\`tput lines\` \`tput cols\`] (bez závorek)"`
+```bash
+echo "Do inicializačního řádku progremeu napište [`tput lines` `tput cols`] (bez závorek)"
+```
 
