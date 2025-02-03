@@ -143,7 +143,11 @@ def udelej_tabulku_se_znamkami(trida):
     print( whole_string_of_table)
 
 if __name__ == "__main__":
-    vytvorit_tridni_knihu(*["2a", "Zbyňek Kopýtko"])
-    x = "a   s"
-    print(x.split())
+    vytvorit_tridni_knihu(*["2a", "Zbyňek", "Kopýtko"])
+    print(nacist_tridni_knihu("2a"))
+    import random
+    # zak = karta_zaka(jmeno="petr", prijimeni="fialka", trida="1a", datum_narozeni="4sdfgwe")
+    # zak.ulozit_do_tridnicke_knihy()
 
+    for i in ["petrfialka1", "petrfialka2", "petrfialka3", "petrfialka4", "petrfialka5", "petrfialka6", "petrfialka7", "petrfialka8", "petrfialka9", "petrfialka10", "petrfialka11"]:
+        pridelit_znamku(username=i, znamka=1, uloha=str(random.randrange(104, 109)), trida="1a")

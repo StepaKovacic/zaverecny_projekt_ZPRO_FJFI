@@ -1,1 +1,169 @@
-{"nazev_tridy": "1a", "jmeno_tridniho_ucitele": "Zbyňek Kopýtko", "zaci": {}, "znamky": {}}
+{
+  "nazev_tridy": "1a",
+  "jmeno_tridniho_ucitele": "Jaromir Noha",
+  "zaci": {
+    "petrfialka1": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka1",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka2": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka2",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka3": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka3",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka4": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka4",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka5": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka5",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka6": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka6",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka7": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka7",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka8": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka8",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka9": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka9",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka10": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka10",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka11": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka11",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka12": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka12",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka13": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka13",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    },
+    "petrfialka14": {
+      "jmeno_zaka": "petr",
+      "prijimeni_zaka": "fialka",
+      "username": "petrfialka14",
+      "datum_narozeni": "4sdfgwe",
+      "trida": "1a"
+    }
+  },
+  "znamky": {
+    "9": {
+      "petrfialka1": 1,
+      "petrfialka5": 1
+    },
+    "3": {
+      "petrfialka2": 1,
+      "petrfialka10": 1
+    },
+    
+    "8ki": {
+      "petrfialka8": 1
+    },
+    "88": {
+      "petrfialka1": 1
+    },
+    "18": {
+      "petrfialka2": 1
+    },
+    "97": {
+      "petrfialka3": 1,
+      "petrfialka6": 1,
+      "petrfialka8": 1
+    },
+   
+    "101": {
+      "petrfialka10": 1
+    },
+    "43": {
+      "petrfialka11": 1
+    },
+    "106": {
+      "petrfialka1": 1,
+      "petrfialka10": 1,
+      "petrfialka3": 1,
+      "petrfialka4": 1,
+      "petrfialka5": 1,
+      "petrfialka7": 1
+    },
+    "107": {
+      "petrfialka2": 1,
+      "petrfialka4": 1,
+      "petrfialka5": 1,
+      "petrfialka8": 1
+    },
+    "108": {
+      "petrfialka3": 1,
+      "petrfialka8": 1,
+      "petrfialka11": 1,
+      "petrfialka6": 1
+    },
+    "105": {
+      "petrfialka6": 1,
+      "petrfialka1": 1,
+      "petrfialka2": 1,
+      "petrfialka10": 1
+    },
+    "104": {
+      "petrfialka7": 1,
+      "petrfialka9": 1
+    },
+    "ka": {
+      "petrfialka1": "3"
+    }
+  }
+}
