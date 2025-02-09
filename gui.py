@@ -124,8 +124,7 @@ class Gui:
         self.refresh_page()
 
     def create_student(self, args):
-        print("fce se spustila")
-        manage_books.create_student(*['Prokop', 'Zelený', '7.4.2006', '4r'])
+        manage_books.create_student(*args)
         self.refresh_page()
 
 
@@ -173,7 +172,6 @@ class Gui:
         help_string = "Pro nápovědu napište \"napoveda\" | Pro odchod napište \"konec\""
         print('\x1b[6;30;42m' + help_string  + (self.t_size[1]  - len(help_string)) * " " + '\033[0m')
         input_str = input("Zadejte příkaz: ")
-        # handle if the input is empty
         if input_str == "":
             print("\n")
             print(self.colored_text("Nebyl zadán žádný příkaz", "red"))
@@ -181,22 +179,30 @@ class Gui:
         list_of_args = [i for i in input_str.split(" ") if i != ""]
         func_name = list_of_args[0]
         args = list_of_args[1:]
-        print(args)
-        # try: 
-        if args != []:
-                self.internal_functions_list[func_name](args)
-        else: self.internal_functions_list[func_name]()
-        # except KeyError:
-        #     print("\n")
+        try: 
+            if args != []:
+                    self.internal_functions_list[func_name](args)
+            else: self.internal_functions_list[func_name]()
 
-        #     print(self.colored_text(f"Neznámý příkaz \"{input_str}\"", "red"))
-            
-        #     self.refresh_page()
+        
+        except KeyError:
+            print("\n")
+            print(self.colored_text(f"Neznámý příkaz \"{input_str}\"", "red"))
+            self.refresh_page()
+
+        except TypeError:
+            print("\n")
+            print(self.colored_text(f"Špatný počet argumentů pro příkaz \"{func_name}\"", "red"))
+            self.refresh_page()
+
+        except Exception as e:
+            print("\n")
+            print(self.colored_text(f"Chyba: {e}", "red"))
+            self.refresh_page()
         
         
     def marks_by_class(self, class_name):
         print("\n")
-        # print(manage_books.load_class_book(*trida))
         print( json.dumps(manage_books.load_class_book(*class_name)["marks"], ensure_ascii=False, indent=2))
         self.refresh_page()
         
@@ -205,6 +211,8 @@ class Gui:
         print("\n")
         print("Byla přidělena známka")
         print("\n")
+        self.refresh_page()
+
     def end(self):
         print("\n"*(self.t_size[0]-1))
         print(self.colored_text("Program ukončen", "green"))
@@ -216,7 +224,7 @@ class Gui:
           
         \t> [nova_tk <jméno třídy> <křestní jm. t.u.> <prijimeni t.u.>] je příkaz pro vytvoření nové třídní knihy 
           
-        \t> [zobraz_tk <jméno třídy>] 
+        \t> [cela_tk <jméno třídy>] 
           
         \t> [konec] ukončí celý program
 
@@ -231,8 +239,6 @@ class Gui:
         \t> [vsechny] vypíše všechny třídní knihy
 
         \t> [napoveda] vypíše tuto nápovědu
-
-
           """
         print(help_string)
         self.refresh_page()

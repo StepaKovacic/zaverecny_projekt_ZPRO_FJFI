@@ -8,6 +8,27 @@
       "username": "ProkopZelený6",
       "date_of_birth": "7.4.2006",
       "class_name": "4r"
+    },
+    "ProkopZelený7": {
+      "student_first_name": "Prokop",
+      "student_last_name": "Zelený",
+      "username": "ProkopZelený7",
+      "date_of_birth": "7.4.2006",
+      "class_name": "4r"
+    },
+    "ProkopZelený8": {
+      "student_first_name": "Prokop",
+      "student_last_name": "Zelený",
+      "username": "ProkopZelený8",
+      "date_of_birth": "7.4.2006",
+      "class_name": "4r"
+    },
+    "ProkopZelený9": {
+      "student_first_name": "Prokop",
+      "student_last_name": "Zelený",
+      "username": "ProkopZelený9",
+      "date_of_birth": "7.4.2006",
+      "class_name": "4r"
     }
   },
   "marks": {}

@@ -51,8 +51,16 @@ class student_record:
         self.card = GLOBAL_STUDENT_JSON_STRUCTURE
         self.card["student_first_name"] = name
         self.card["student_last_name"] = lastname
-        self.card["date_of_birth"] = date_of_birth
-        self.card["class_name"] = class_name
+        
+        if len(date_of_birth.split(".")) == 3:
+            self.card["date_of_birth"] = date_of_birth
+        else:
+            raise ValueError("Datum narození musí být ve formátu dd.mm.yyyy")
+        
+        if class_name + ".json" in list_all_class_books():
+            self.card["class_name"] = class_name
+        else:
+            raise ValueError("Třída neexistuje")
       
     def save_record_to_classbook(self):        
         if not self.card["class_name"] + ".json" in list_all_class_books():
@@ -78,7 +86,20 @@ class student_record:
             update_class_book(local_class_book)
 
 
-
+def delete_student(username, classname):
+    if classname + ".json" in list_all_class_books():
+        classbook = load_class_book(classname)
+        if username in classbook["students"]:
+            del classbook["students"][username]
+            update_class_book(classbook)
+            for i in classbook["marks"]:
+                if username in classbook["marks"][i]:
+                    del classbook["marks"][i][username]
+            return 1
+        else:
+            return 0
+    else:
+        return 0
 
 
 def create_student(name, lastname, date_of_birth, class_name):
@@ -86,19 +107,25 @@ def create_student(name, lastname, date_of_birth, class_name):
     student_card.save_record_to_classbook()
     return 1
 
-def give_mark( username, mark, activity_name, class_name = None):
-    if mark not in [i/2 for i in range(2, 11)]: 
-        print(f"Známka musí být číslo z množiny {set([i/2 for i in range(2, 11)])}")
-        return 0
-    if class_name != None:
-        load_class_book = load_class_book(class_name)
-        # print(json.dumps(tridni_kniha_local, indent=1, ensure_ascii=False))
-        if activity_name not in list(load_class_book["marks"]):
-            load_class_book["marks"][activity_name] = {}
-        load_class_book["marks"][activity_name][username] = mark
-        if username in load_class_book["students"]:
-            update_class_book(load_class_book)
-        else: return 0
+def give_mark( username, mark, activity_name, class_name):    
+
+    if class_name + ".json" not in list_all_class_books():
+        raise ValueError("Třída neexistuje")
+
+    if float(mark) not in [i/2 for i in range(2, 11)]: 
+        
+        raise ValueError(f"Známka musí být číslo z množiny {[i/2 for i in range(2, 11)]}")
+    
+
+    else:
+        classbook = load_class_book(class_name)
+        if activity_name not in list(classbook["marks"]):
+            classbook["marks"][activity_name] = {}
+        classbook["marks"][activity_name][username] = mark
+        if username in classbook["students"]:
+            update_class_book(classbook)
+    
+        else: raise ValueError("Student není v třídě")
 
 
 # def udelej_tabulku_se_znamkami(trida):

@@ -99,6 +99,13 @@
       "username": "petrfialka14",
       "datum_narozeni": "4sdfgwe",
       "trida": "1a"
+    },
+    "šL1": {
+      "student_first_name": "š",
+      "student_last_name": "L",
+      "username": "šL1",
+      "date_of_birth": "33.5.2005",
+      "class_name": "1a"
     }
   },
   "marks": {
@@ -175,6 +182,9 @@
     },
     "Hláskování": {
       "petrfialka1": "2"
+    },
+    "kopani": {
+      "petrfialka1": "3"
     }
   }
 }
