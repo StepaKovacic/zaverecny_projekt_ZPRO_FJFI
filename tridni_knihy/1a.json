@@ -102,7 +102,7 @@
     }
   },
   "znamky": {
-    "9": {
+    "Diktát": {
       "petrfialka1": 1,
       "petrfialka5": 1
     },
@@ -110,11 +110,10 @@
       "petrfialka2": 1,
       "petrfialka10": 1
     },
-    
     "8ki": {
       "petrfialka8": 1
     },
-    "88": {
+    "Ukol dobrovolný": {
       "petrfialka1": 1
     },
     "18": {
@@ -125,45 +124,57 @@
       "petrfialka6": 1,
       "petrfialka8": 1
     },
-   
     "101": {
       "petrfialka10": 1
     },
     "43": {
       "petrfialka11": 1
     },
-    "106": {
+    "Dějiny": {
       "petrfialka1": 1,
       "petrfialka10": 1,
       "petrfialka3": 1,
       "petrfialka4": 1,
       "petrfialka5": 1,
-      "petrfialka7": 1
+      "petrfialka7": 1,
+      "petrfialka6": 1,
+      "petrfialka9": 1
     },
     "107": {
       "petrfialka2": 1,
       "petrfialka4": 1,
       "petrfialka5": 1,
-      "petrfialka8": 1
+      "petrfialka8": 1,
+      "petrfialka10": 1
     },
-    "108": {
+    "Oprava testu": {
       "petrfialka3": 1,
       "petrfialka8": 1,
       "petrfialka11": 1,
-      "petrfialka6": 1
+      "petrfialka6": 1,
+      "petrfialka1": 1,
+      "petrfialka4": 1,
+      "petrfialka7": 1
     },
-    "105": {
+    "Kliky": {
       "petrfialka6": 1,
       "petrfialka1": 1,
       "petrfialka2": 1,
-      "petrfialka10": 1
+      "petrfialka10": 1,
+      "petrfialka11": 1
     },
     "104": {
       "petrfialka7": 1,
-      "petrfialka9": 1
+      "petrfialka9": 1,
+      "petrfialka1": 2.5,
+      "petrfialka2": 1,
+      "petrfialka5": 1
     },
-    "ka": {
+    "Zpěv": {
       "petrfialka1": "3"
+    },
+    "Hláskování": {
+      "petrfialka1": "2"
     }
   }
 }

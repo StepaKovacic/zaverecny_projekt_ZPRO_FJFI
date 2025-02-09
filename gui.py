@@ -6,7 +6,7 @@ import config
 class Gui:
     def __init__(self):
         self.t_size = (os.get_terminal_size().lines - 2, os.get_terminal_size().columns)
-        self.fce = {"cela_tk": self.html_templater, "napoveda":self.napoveda, "konec":self.konec, "nova_tk":self.nova_tk, "vsechny":self.vypis_vsechny_tridni_knihy, "znamky":self.znamky_tridy, "pridel_znamku":self.pridel_znamku}
+        self.fce = {"cela_tk": self.html_templater, "napoveda":self.napoveda, "konec":self.konec, "nova_tk":self.nova_tk, "vsechny":self.vypis_vsechny_tridni_knihy, "znamky":self.znamky_tridy, "pridel_znamku":self.pridel_znamku, "student_info":self.student_info}
         odsazeni = "\n"*(self.t_size[0]//2)
         welcome_str = "Vítejte v programu pro správu třídních knih"
         heading_str = "Autor: Štěpán Kovačič"
@@ -19,29 +19,18 @@ class Gui:
         print("\n")
         x = manage_books.nacist_tridni_knihu(*trida)
         structure = [ i for i in  manage_books.nacist_tridni_knihu(*trida)]
-        # print([manage_books.nacist_tridni_knihu(*trida)[i] for i in structure])
-        
-
-        """GLOBAL_JSON_STRUCTURE = {"nazev_tridy":None, 
-                         "jmeno_tridniho_ucitele":None, 
-                         "zaci":{}, 
-                         "znamky":{}}"""
         tablestr = ""
         for i in x["zaci"]:
             l = x["zaci"][i]
             fff =  "<tr><td>" + "</td><td>".join(l.values()) + "</td></tr>"
             tablestr += fff
-
-
         seznam_zaku_tridy = [i for i in x["zaci"]]
       
-
-        def catch(func, handle=lambda e : e, *args, **kwargs):
+        def catch(func,  *args, **kwargs):
             try:
                 return str(func(*args, **kwargs))
             except Exception as e:
                 return "-"
-
         znamky_table_str =  "<tr><th>" + "</th><th>".join(["jmeno"] + [i for i in x["znamky"]]) + "</th></tr>"
 
         
@@ -124,8 +113,32 @@ tr:nth-child(even) {{
         for t in text:
             print(f"{t:^{self.t_size[1]}}")
 
+    def student_info(self, username):
+        username = username[0]
+
+        print(f"\n\tInfo o studentovi {self.c(username, "purple")}")
+        knihy = manage_books.vypsat_tridni_knihy()
+        for i in knihy:
+            with open(config.GLOBAL_LOCATION + i, "r") as tridni_kniha_json:
+                    tridni_knihja = json.loads(tridni_kniha_json.read())
+                    if username in (tridni_knihja["zaci"]).keys():
+                        
+                        print("\n", json.dumps(tridni_knihja["zaci"][username], indent=2, ensure_ascii=False), "\n")
+                        znamky_podle_username = ([z for z in tridni_knihja["znamky"] if username in tridni_knihja["znamky"][z]])
+                        x = {}
+                        for znamka in znamky_podle_username:
+                            x[znamka] = float(tridni_knihja["znamky"][znamka][username])
+                        print("{:<20}|{:>8}".format('Úloha','Známka'))
+                        print("-" * 29)
+                        for k, v in x.items():
+                            print("{:<20}|{:>8}".format(k, v))
+                        print(f"\nAritmetický průměr známek žáka {self.c(username, "purple")} je {self.c(str(round(sum(x.values())/len(x), 2)), "purple")}")
+        self.refresh_page()
+
     def vypis_vsechny_tridni_knihy(self):
         print("\n")
+
+        print("\tZde jsou vypsány všechny třídní knihy")
         vsechny = [i for i in manage_books.vypsat_tridni_knihy() if i != "all_students.json"]
         for i in vsechny:
             print("\t> " , i[:-5])

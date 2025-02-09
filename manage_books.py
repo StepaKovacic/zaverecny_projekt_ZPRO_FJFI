@@ -7,7 +7,7 @@ def vypsat_tridni_knihy():
     for cesta_k_souboru in os.listdir(GLOBAL_LOCATION):
         if os.path.isfile(os.path.join(GLOBAL_LOCATION, cesta_k_souboru)):
             vysledky.append(cesta_k_souboru)
-    return [i for i in vysledky if i[-5:] == ".json"]
+    return [i for i in vysledky if (i[-5:] == ".json" and i != "all_students.json") ]
 
 def vytvorit_tridni_knihu(jmeno_tridy, krestni_jmeno_tridniho_ucitele, prijimeni_tridniho_ucitele):
    
@@ -142,6 +142,8 @@ def udelej_tabulku_se_znamkami(trida):
         index_studenta += 1
     print( whole_string_of_table)
 
+
+valid_znamky = [i/2 for i in range(2, 11)]
 if __name__ == "__main__":
     vytvorit_tridni_knihu(*["2a", "Zbyňek", "Kopýtko"])
     print(nacist_tridni_knihu("2a"))
