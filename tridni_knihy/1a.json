@@ -1,7 +1,7 @@
 {
-  "nazev_tridy": "1a",
-  "jmeno_tridniho_ucitele": "Jaromir Noha",
-  "zaci": {
+  "class_name": "1a",
+  "name_of_teacher": "Jaromir Noha",
+  "students": {
     "petrfialka1": {
       "jmeno_zaka": "petr",
       "prijimeni_zaka": "fialka",
@@ -101,7 +101,7 @@
       "trida": "1a"
     }
   },
-  "znamky": {
+  "marks": {
     "Diktát": {
       "petrfialka1": 1,
       "petrfialka5": 1

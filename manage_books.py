@@ -2,154 +2,140 @@ import os
 from config import *
 import json
 
-def vypsat_tridni_knihy():
-    vysledky = []
-    for cesta_k_souboru in os.listdir(GLOBAL_LOCATION):
-        if os.path.isfile(os.path.join(GLOBAL_LOCATION, cesta_k_souboru)):
-            vysledky.append(cesta_k_souboru)
-    return [i for i in vysledky if (i[-5:] == ".json" and i != "all_students.json") ]
+def list_all_class_books():
+    filenames_unfiltered = []
+    for filepath in os.listdir(GLOBAL_LOCATION):
+        if os.path.isfile(os.path.join(GLOBAL_LOCATION, filepath)):
+            filenames_unfiltered.append(filepath)
+    return [filename for filename in filenames_unfiltered if (filename[-5:] == ".json" and filename != "all_students.json") ]
 
-def vytvorit_tridni_knihu(jmeno_tridy, krestni_jmeno_tridniho_ucitele, prijimeni_tridniho_ucitele):
+def create_class_book(classname, teacher_first_name, teacher_last_name):
    
-    if str(jmeno_tridy) + "json" in vypsat_tridni_knihy():
+    if str(classname) + "json" in list_all_class_books():
         return 0
     else:
-        f = open(f"{GLOBAL_LOCATION}{jmeno_tridy}.json", "w")
-        lokalni_json_tridy = GLOBAL_JSON_STRUCTURE
-        lokalni_json_tridy["nazev_tridy"] = jmeno_tridy
-        lokalni_json_tridy["jmeno_tridniho_ucitele"] = krestni_jmeno_tridniho_ucitele + " " + prijimeni_tridniho_ucitele
-        f.write(json.dumps(lokalni_json_tridy, ensure_ascii=False))
+        f = open(f"{GLOBAL_LOCATION}{classname}.json", "w")
+        internal_json_of_class = GLOBAL_JSON_STRUCTURE
+        internal_json_of_class["class_name"] = classname
+        internal_json_of_class["name_of_teacher"] = teacher_first_name + " " + teacher_last_name
+        f.write(json.dumps(internal_json_of_class, ensure_ascii=False))
         f.close()
         return 1
     
-def smaz_zaznam_tridni_knihy(jmeno_tridy):
-    if jmeno_tridy + ".json" in vypsat_tridni_knihy():
-        with open(GLOBAL_LOCATION + jmeno_tridy + ".json", "w") as trida_na_smazani:
-            trida_na_smazani.write("")
+def delete_record_of_class_book(classname):
+    if classname + ".json" in list_all_class_books():
+        with open(GLOBAL_LOCATION + classname + ".json", "w") as record_to_be_deleted:
+            record_to_be_deleted.write("")
         return 1
     else: return 0
 
-def nacist_tridni_knihu(jmeno_tridy):
-    if jmeno_tridy + ".json" in vypsat_tridni_knihy():
-        with open(GLOBAL_LOCATION + jmeno_tridy + ".json", "r") as tridni_kniha_json:
+def load_class_book(classname):
+    if classname + ".json" in list_all_class_books():
+        with open(GLOBAL_LOCATION + classname + ".json", "r") as class_book_json:
 
-            return json.loads(tridni_kniha_json.read())
+            return json.loads(class_book_json.read())
         
-def aktualizovat_tridni_knihu(tridni_kniha_json):
-    if tridni_kniha_json["nazev_tridy"] + ".json" in vypsat_tridni_knihy():
-        with open(GLOBAL_LOCATION + tridni_kniha_json["nazev_tridy"] + ".json", "w") as tk:
-            tk.write(json.dumps(tridni_kniha_json, indent=2, ensure_ascii=False))
+def update_class_book(class_book_json):
+    if class_book_json["class_name"] + ".json" in list_all_class_books():
+        with open(GLOBAL_LOCATION + class_book_json["class_name"] + ".json", "w") as tk:
+            tk.write(json.dumps(class_book_json, indent=2, ensure_ascii=False))
 
-def vypis_jmena_vsech_zaku():
+def list_names_of_all_students():
     with open(GLOBAL_LOCATION + "all_students.json", "r") as all_students:
         return json.loads(all_students.read())
-class karta_zaka:
-    def __init__(self, jmeno, prijimeni, datum_narozeni, trida):
-        self.karta = GLOBAL_STUDENT_JSON_STRUCTURE
-        self.karta["jmeno_zaka"] = jmeno
-        self.karta["prijimeni_zaka"] = prijimeni
-        self.karta["datum_narozeni"] = datum_narozeni
-        self.karta["trida"] = trida
+
+
+
+class student_record:
+    def __init__(self, name, lastname, date_of_birth, class_name):
+        self.card = GLOBAL_STUDENT_JSON_STRUCTURE
+        self.card["student_first_name"] = name
+        self.card["student_last_name"] = lastname
+        self.card["date_of_birth"] = date_of_birth
+        self.card["class_name"] = class_name
       
-    def ulozit_do_tridnicke_knihy(self):        
-        if not self.karta["trida"] + ".json" in vypsat_tridni_knihy():
+    def save_record_to_classbook(self):        
+        if not self.card["class_name"] + ".json" in list_all_class_books():
             return 0
         else:
-            index_jmena = 1
-            vsichni_studenti = vypis_jmena_vsech_zaku()
-            jmeno = self.karta["jmeno_zaka"]
-            prijimeni = self.karta["prijimeni_zaka"]
+            name_index = 1
+            all_students = list_names_of_all_students()
+            name = self.card["student_first_name"]
+            lastname = self.card["student_last_name"]
             while True:
-                if jmeno + prijimeni + str(index_jmena) in vsichni_studenti:
-                    index_jmena += 1
+                if name + lastname + str(name_index) in all_students:
+                    name_index += 1
                     continue
                 else:
-                    self.karta["username"] = jmeno + prijimeni + str(index_jmena)
-                    vsichni_studenti.append(jmeno + prijimeni + str(index_jmena))
+                    self.card["username"] = name + lastname + str(name_index)
+                    all_students.append(name + lastname + str(name_index))
                     with open(GLOBAL_LOCATION + "all_students.json", "w") as a:
-                        a.write(json.dumps(vsichni_studenti, ensure_ascii=False))
+                        a.write(json.dumps(all_students, ensure_ascii=False))
                     break
-            lokalni_tridni_kniha = nacist_tridni_knihu(self.karta["trida"])
-            print(vypis_jmena_vsech_zaku()         )       
-            lokalni_tridni_kniha["zaci"][self.karta["username"]] = (self.karta)
-            aktualizovat_tridni_knihu(lokalni_tridni_kniha)
+            local_class_book = load_class_book(self.card["trida"])
+            print(list_names_of_all_students()         )       
+            local_class_book["students"][self.card["username"]] = (self.card)
+            update_class_book(local_class_book)
 
-class bcolors:
-    HEADER = '\033[95m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
 
-def pridelit_znamku( username, znamka, uloha, trida = None):
-    if trida != None:
-        tridni_kniha_local = nacist_tridni_knihu(trida)
+
+
+
+def create_student(name, lastname, date_of_birth, class_name):
+    student_card = student_record(name=name, lastname=lastname, date_of_birth=date_of_birth, class_name=class_name)
+    student_card.save_record_to_classbook()
+    return 1
+
+def give_mark( username, mark, activity_name, class_name = None):
+    if mark not in [i/2 for i in range(2, 11)]: 
+        print(f"Známka musí být číslo z množiny {set([i/2 for i in range(2, 11)])}")
+        return 0
+    if class_name != None:
+        load_class_book = load_class_book(class_name)
         # print(json.dumps(tridni_kniha_local, indent=1, ensure_ascii=False))
-        if uloha not in list(tridni_kniha_local["znamky"]):
-            tridni_kniha_local["znamky"][uloha] = {}
-        tridni_kniha_local["znamky"][uloha][username] = znamka
-        if username in tridni_kniha_local["zaci"]:
-            aktualizovat_tridni_knihu(tridni_kniha_local)
+        if activity_name not in list(load_class_book["marks"]):
+            load_class_book["marks"][activity_name] = {}
+        load_class_book["marks"][activity_name][username] = mark
+        if username in load_class_book["students"]:
+            update_class_book(load_class_book)
         else: return 0
-# import requests
-# import random
-# word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
-
-# response = requests.get(word_site)
-# WORDS = response.content.splitlines()
-
-# for i in range(15):
-#     w1 = WORDS[random.randrange(len(WORDS))].decode('ASCII')
-#     w2 = WORDS[random.randrange(len(WORDS))].decode('ASCII')
-#     zak = karta_zaka(jmeno=w1, prijimeni=w2, datum_narozeni=1, trida="6a")
-#     zak.ulozit_do_tridnicke_knihy()
-# vytvorit_tridni_knihu("6a", "Luboš Navrátil")
-# zak = karta_zaka(jmeno="Lukáš", prijimeni="Karel", datum_narozeni=4, trida="6a")
-# zak.ulozit_do_tridnicke_knihy()
-# print(pridelit_znamku("LukášKarel5", 4, uloha="úkol", trida="6a"))
-def udelej_tabulku_se_znamkami(trida):
-    USERNAMES = "USERNAMES"
-
-    header_poznamky = [{"nazev":x, "sirka_sloupce":max(len(x), 3)} for x in [i for i in nacist_tridni_knihu("6a")["znamky"]] ]
-    header_poznamky = {x:max(len(x) + 3, 3) for x in   [i for i in nacist_tridni_knihu("6a")["znamky"]]}
-
-    slovnik_znamek_podle_jmen = {}
-    for zak_username in nacist_tridni_knihu("6a")["zaci"]:
-        slovnik_znamek_podle_jmen[zak_username] = {}
-        for x in nacist_tridni_knihu("6a")["znamky"]:
-            if zak_username in nacist_tridni_knihu("6a")["znamky"][x]:
-                slovnik_znamek_podle_jmen[zak_username][x] = str(nacist_tridni_knihu("6a")["znamky"][x][zak_username])
-            else:
-                slovnik_znamek_podle_jmen[zak_username][x] = " "
-
-    whole_string_of_table = ""
-    username_coll = [USERNAMES] + [i for i in slovnik_znamek_podle_jmen]
-    max_col = max([len(i) + 5 for i in username_coll])
-
-    serparator = "+" + "-"*max_col + "++" + "-+-".join([f"{header_poznamky[znamka]*"-":^{header_poznamky[znamka]}}" for znamka in slovnik_znamek_podle_jmen[next(iter(slovnik_znamek_podle_jmen))]])
-    whole_string_of_table += serparator + "\n"
-
-    whole_string_of_table += f"{USERNAMES:>{max_col}}" + " ||" +  " | ".join([f"{i :^{header_poznamky[i]}}" for i in header_poznamky]) + "\n"
-    header = []
-    whole_string_of_table += serparator + "\n"
-    index_studenta = 1
-    for i in slovnik_znamek_podle_jmen:
-        jmeno_s_indexem = f"{i} [{str(100 + index_studenta)[1:]}]"
-        znamky_studenta_v_radku =f"{jmeno_s_indexem  :>{max_col}}" + " ||" +  " | ".join([f"{slovnik_znamek_podle_jmen[i][znamka]:^{ header_poznamky[znamka]}}" for znamka in slovnik_znamek_podle_jmen[i]])
-        student_jmeno_formatovan = f"{i:>{20}}"
-        whole_string_of_table +=  znamky_studenta_v_radku + "\n"
-        whole_string_of_table += serparator + "\n"
-        index_studenta += 1
-    print( whole_string_of_table)
 
 
-valid_znamky = [i/2 for i in range(2, 11)]
+# def udelej_tabulku_se_znamkami(trida):
+#     USERNAMES = "USERNAMES"
+
+#     header_pomarks = [{"nazev":x, "sirka_sloupce":max(len(x), 3)} for x in [i for i in load_class_book("6a")["marks"]] ]
+#     header_pomarks = {x:max(len(x) + 3, 3) for x in   [i for i in load_class_book("6a")["marks"]]}
+
+#     slovnik_znamek_podle_jmen = {}
+#     for zak_username in load_class_book("6a")["students"]:
+#         slovnik_znamek_podle_jmen[zak_username] = {}
+#         for x in load_class_book("6a")["marks"]:
+#             if zak_username in load_class_book("6a")["marks"][x]:
+#                 slovnik_znamek_podle_jmen[zak_username][x] = str(load_class_book("6a")["marks"][x][zak_username])
+#             else:
+#                 slovnik_znamek_podle_jmen[zak_username][x] = " "
+
+#     whole_string_of_table = ""
+#     username_coll = [USERNAMES] + [i for i in slovnik_znamek_podle_jmen]
+#     max_col = max([len(i) + 5 for i in username_coll])
+
+#     serparator = "+" + "-"*max_col + "++" + "-+-".join([f"{header_pomarks[znamka]*"-":^{header_pomarks[znamka]}}" for znamka in slovnik_znamek_podle_jmen[next(iter(slovnik_znamek_podle_jmen))]])
+#     whole_string_of_table += serparator + "\n"
+
+#     whole_string_of_table += f"{USERNAMES:>{max_col}}" + " ||" +  " | ".join([f"{i :^{header_pomarks[i]}}" for i in header_pomarks]) + "\n"
+#     header = []
+#     whole_string_of_table += serparator + "\n"
+#     index_studenta = 1
+#     for i in slovnik_znamek_podle_jmen:
+#         jmeno_s_indexem = f"{i} [{str(100 + index_studenta)[1:]}]"
+#         marks_studenta_v_radku =f"{jmeno_s_indexem  :>{max_col}}" + " ||" +  " | ".join([f"{slovnik_znamek_podle_jmen[i][znamka]:^{ header_pomarks[znamka]}}" for znamka in slovnik_znamek_podle_jmen[i]])
+#         student_jmeno_formatovan = f"{i:>{20}}"
+#         whole_string_of_table +=  marks_studenta_v_radku + "\n"
+#         whole_string_of_table += serparator + "\n"
+#         index_studenta += 1
+#     print( whole_string_of_table)
+
+
 if __name__ == "__main__":
-    vytvorit_tridni_knihu(*["2a", "Zbyňek", "Kopýtko"])
-    print(nacist_tridni_knihu("2a"))
-    import random
-    # zak = karta_zaka(jmeno="petr", prijimeni="fialka", trida="1a", datum_narozeni="4sdfgwe")
-    # zak.ulozit_do_tridnicke_knihy()
-
-    for i in ["petrfialka1", "petrfialka2", "petrfialka3", "petrfialka4", "petrfialka5", "petrfialka6", "petrfialka7", "petrfialka8", "petrfialka9", "petrfialka10", "petrfialka11"]:
-        pridelit_znamku(username=i, znamka=1, uloha=str(random.randrange(104, 109)), trida="1a")
+    pass
