@@ -15,7 +15,7 @@ class Gui:
                                         "znamky":self.marks_by_class, 
                                         "pridel_znamku":self.give_mark, 
                                         "student_info":self.student_info, 
-                                        "create_student":self.create_student}
+                                        "vytvorit_studenta":self.create_student}
         
         indentation = "\n"*(self.t_size[0]//2)
         welcome_str = "Vítejte v programu pro správu třídních knih"
@@ -124,7 +124,8 @@ class Gui:
         self.refresh_page()
 
     def create_student(self, args):
-        manage_books.create_student(*args)
+        print("fce se spustila")
+        manage_books.create_student(*['Prokop', 'Zelený', '7.4.2006', '4r'])
         self.refresh_page()
 
 
@@ -181,16 +182,16 @@ class Gui:
         func_name = list_of_args[0]
         args = list_of_args[1:]
         print(args)
-        try: 
-            if args != []:
+        # try: 
+        if args != []:
                 self.internal_functions_list[func_name](args)
-            else: self.internal_functions_list[func_name]()
-        except KeyError:
-            print("\n")
+        else: self.internal_functions_list[func_name]()
+        # except KeyError:
+        #     print("\n")
 
-            print(self.colored_text(f"Neznámý příkaz \"{input_str}\"", "red"))
+        #     print(self.colored_text(f"Neznámý příkaz \"{input_str}\"", "red"))
             
-            self.refresh_page()
+        #     self.refresh_page()
         
         
     def marks_by_class(self, class_name):
@@ -220,12 +221,24 @@ class Gui:
         \t> [konec] ukončí celý program
 
         \t> [znamky <jméno třídy>]
+
+        \t> [pridel_znamku <username> <známka> <název úlohy> <jméno třídy>]
+
+        \t> [student_info <username>]
+
+        \t> [vytvorit_studenta <jméno> <přijímení> <datum narození> <jméno třídy>]
+
+        \t> [vsechny] vypíše všechny třídní knihy
+
+        \t> [napoveda] vypíše tuto nápovědu
+
+
           """
         print(help_string)
         self.refresh_page()
     
     def new_book(self, args):
         manage_books.create_class_book(*args)
-        self.vypis_vsechny_tridni_knihy()
+        self.list_all_class_books()
 
 x = Gui()

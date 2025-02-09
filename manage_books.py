@@ -72,7 +72,7 @@ class student_record:
                     with open(GLOBAL_LOCATION + "all_students.json", "w") as a:
                         a.write(json.dumps(all_students, ensure_ascii=False))
                     break
-            local_class_book = load_class_book(self.card["trida"])
+            local_class_book = load_class_book(self.card["class_name"])
             print(list_names_of_all_students()         )       
             local_class_book["students"][self.card["username"]] = (self.card)
             update_class_book(local_class_book)
