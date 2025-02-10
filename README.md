@@ -1,4 +1,8 @@
 # Program pro správu třídnických knih
+Zapnutí probíhá pomocí `main.py`, poté stačí napsat `napoveda` a rozbalí se nabídka příkazů. 
+
+
+# Struktura
 
 Projekt se skládá z několika souborů
 
