@@ -7,6 +7,7 @@ class Gui:
     def __init__(self): 
         self.t_size = (os.get_terminal_size().lines - 2, os.get_terminal_size().columns)
 
+        
         self.internal_functions_list = {"cela_tk": self.browser_viewer, 
                                         "napoveda":self.hint,
                                         "konec":self.end, 
@@ -15,7 +16,9 @@ class Gui:
                                         "znamky":self.marks_by_class, 
                                         "pridel_znamku":self.give_mark, 
                                         "student_info":self.student_info, 
-                                        "vytvorit_studenta":self.create_student}
+                                        "vytvorit_studenta":self.create_student, 
+                                        "pridel_nekolik_znamek":self.give_several_marks,
+                                        "smaz_tk": self.delete_class_book}
         
         indentation = "\n"*(self.t_size[0]//2)
         welcome_str = "Vítejte v programu pro správu třídních knih"
@@ -28,7 +31,7 @@ class Gui:
     def browser_viewer(self, class_name): 
         print("\n") 
 
-        print(f"Vytvářím náhled třídní knihy {self.colored_text(class_name[0], 'purple')}")
+        print(f"Vytváří se  náhled třídní knihy {self.colored_text(class_name[0], 'purple')}")
         print(*class_name)
         loaded_class_book = manage_books.load_class_book(*class_name) 
         unparsed_table_string= ""
@@ -127,6 +130,10 @@ class Gui:
         manage_books.create_student(*args)
         self.refresh_page()
 
+    def delete_class_book(self, args):
+        manage_books.delete_record_of_class_book(*args)
+        self.refresh_page()
+
 
     def print_centered_text(self, *text):
         for t in text:
@@ -219,6 +226,18 @@ class Gui:
         print("\n")
         self.refresh_page()
 
+    def give_several_marks(self, text):
+        usernema = text[0]
+        del text[0]
+        class_name = text[0]
+        del text[0]
+        for x in [ [usernema ] + text[i:i+2] + [class_name] for i in range(0, len(text), 2)]:
+            manage_books.give_mark(*x)
+            print("\n")
+            print(f"\tByla přidělena známka {x[1]} za '{x[2]}'")
+           
+        self.refresh_page()
+
     def end(self):
         print("\n"*(self.t_size[0]-1))
         print(self.colored_text("Program ukončen", "green"))
@@ -236,7 +255,9 @@ class Gui:
 
         \t> [znamky <jméno třídy>]
 
-        \t> [pridel_znamku <username> <známka> <název úlohy> <jméno třídy>]
+        \t> [pridel_znamku <username> <známka> <název úlohys> <jméno třídy>]
+
+        \t> [pridel_nekolik_znamek <username> <jméno třídy> *(<známka> <aktivita>)]
 
         \t> [student_info <username>]
 
@@ -257,7 +278,9 @@ class Gui:
         self.refresh_page()
     
     def new_book(self, args):
-        manage_books.create_class_book(*args)
+        book = manage_books.class_book(*args)
+        book.write_class_book()
+        # manage_books.create_class_book(*args)
         self.list_all_class_books()
 
 x = Gui()

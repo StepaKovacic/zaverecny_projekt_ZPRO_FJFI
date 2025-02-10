@@ -9,31 +9,39 @@ def list_all_class_books():
             filenames_unfiltered.append(filepath)
     return [filename for filename in filenames_unfiltered if (filename[-5:] == ".json" and filename != "all_students.json") ]
 
-def create_class_book(classname, teacher_first_name, teacher_last_name):
-   
-    if str(classname) + "json" in list_all_class_books():
-        return 0
-    else:
-        f = open(f"{GLOBAL_LOCATION}{classname}.json", "w")
-        internal_json_of_class = GLOBAL_JSON_STRUCTURE
-        internal_json_of_class["class_name"] = classname
-        internal_json_of_class["name_of_teacher"] = teacher_first_name + " " + teacher_last_name
-        f.write(json.dumps(internal_json_of_class, ensure_ascii=False))
-        f.close()
-        return 1
+
+class class_book:
+    def __init__(self, classname, teacher_first_name, teacher_last_name):
+        self.class_book = GLOBAL_JSON_STRUCTURE
+        self.class_book["class_name"] = classname
+        self.class_book["name_of_teacher"] = teacher_first_name + " " + teacher_last_name
+    def write_class_book(self):
+        if self.class_book["class_name"] + ".json" in list_all_class_books():
+            raise ValueError("Třída již existuje")
+        with open(GLOBAL_LOCATION + self.class_book["class_name"] + ".json", "w") as f:
+            f.write(json.dumps(self.class_book, indent=1, ensure_ascii=False))
+
+
+    
+
+
     
 def delete_record_of_class_book(classname):
     if classname + ".json" in list_all_class_books():
-        with open(GLOBAL_LOCATION + classname + ".json", "w") as record_to_be_deleted:
-            record_to_be_deleted.write("")
+        os.remove(GLOBAL_LOCATION + classname + ".json") 
+        # with open(GLOBAL_LOCATION + classname + ".json", "w") as record_to_be_deleted:
+        #     record_to_be_deleted.write("")
         return 1
     else: return 0
 
 def load_class_book(classname):
     if classname + ".json" in list_all_class_books():
-        with open(GLOBAL_LOCATION + classname + ".json", "r") as class_book_json:
+        try:
+            with open(GLOBAL_LOCATION + classname + ".json", "r") as class_book_json:
 
-            return json.loads(class_book_json.read())
+                return json.loads(class_book_json.read())
+        except FileNotFoundError:
+            raise ValueError("soubor nenalezen")
         
 def update_class_book(class_book_json):
     if class_book_json["class_name"] + ".json" in list_all_class_books():
@@ -126,42 +134,6 @@ def give_mark( username, mark, activity_name, class_name):
             update_class_book(classbook)
     
         else: raise ValueError("Student není v třídě")
-
-
-# def udelej_tabulku_se_znamkami(trida):
-#     USERNAMES = "USERNAMES"
-
-#     header_pomarks = [{"nazev":x, "sirka_sloupce":max(len(x), 3)} for x in [i for i in load_class_book("6a")["marks"]] ]
-#     header_pomarks = {x:max(len(x) + 3, 3) for x in   [i for i in load_class_book("6a")["marks"]]}
-
-#     slovnik_znamek_podle_jmen = {}
-#     for zak_username in load_class_book("6a")["students"]:
-#         slovnik_znamek_podle_jmen[zak_username] = {}
-#         for x in load_class_book("6a")["marks"]:
-#             if zak_username in load_class_book("6a")["marks"][x]:
-#                 slovnik_znamek_podle_jmen[zak_username][x] = str(load_class_book("6a")["marks"][x][zak_username])
-#             else:
-#                 slovnik_znamek_podle_jmen[zak_username][x] = " "
-
-#     whole_string_of_table = ""
-#     username_coll = [USERNAMES] + [i for i in slovnik_znamek_podle_jmen]
-#     max_col = max([len(i) + 5 for i in username_coll])
-
-#     serparator = "+" + "-"*max_col + "++" + "-+-".join([f"{header_pomarks[znamka]*"-":^{header_pomarks[znamka]}}" for znamka in slovnik_znamek_podle_jmen[next(iter(slovnik_znamek_podle_jmen))]])
-#     whole_string_of_table += serparator + "\n"
-
-#     whole_string_of_table += f"{USERNAMES:>{max_col}}" + " ||" +  " | ".join([f"{i :^{header_pomarks[i]}}" for i in header_pomarks]) + "\n"
-#     header = []
-#     whole_string_of_table += serparator + "\n"
-#     index_studenta = 1
-#     for i in slovnik_znamek_podle_jmen:
-#         jmeno_s_indexem = f"{i} [{str(100 + index_studenta)[1:]}]"
-#         marks_studenta_v_radku =f"{jmeno_s_indexem  :>{max_col}}" + " ||" +  " | ".join([f"{slovnik_znamek_podle_jmen[i][znamka]:^{ header_pomarks[znamka]}}" for znamka in slovnik_znamek_podle_jmen[i]])
-#         student_jmeno_formatovan = f"{i:>{20}}"
-#         whole_string_of_table +=  marks_studenta_v_radku + "\n"
-#         whole_string_of_table += serparator + "\n"
-#         index_studenta += 1
-#     print( whole_string_of_table)
 
 
 if __name__ == "__main__":
