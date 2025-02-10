@@ -203,7 +203,13 @@ class Gui:
         
     def marks_by_class(self, class_name):
         print("\n")
-        print( json.dumps(manage_books.load_class_book(*class_name)["marks"], ensure_ascii=False, indent=2))
+        for i in manage_books.load_class_book(*class_name)["marks"]:
+            print(f"Známky za '{i}', avg: {round(sum([float(i) for i in manage_books.load_class_book(*class_name)["marks"][i].values()])/len(manage_books.load_class_book(*class_name)["marks"][i]), 2)}")
+            print("-"*30)
+            for x in manage_books.load_class_book(*class_name)["marks"][i]:
+                print("  > {:<15}|{:>4}".format(x,manage_books.load_class_book(*class_name)["marks"][i][x]))
+               
+            print("\n")
         self.refresh_page()
         
     def give_mark(self, text):
@@ -241,6 +247,13 @@ class Gui:
         \t> [napoveda] vypíše tuto nápovědu
           """
         print(help_string)
+        self.refresh_page()
+
+
+    def delete_student(self, args):
+        print(f"Uživatel {self.colored_text(args[0], 'purple')} byl smazán ze třídní knihy {self.colored_text(args[1], 'purple')}")
+        print("všechny záznamy a jeho známky byly smazany, jeho username nebyl smazán")
+        manage_books.delete_student(*args)
         self.refresh_page()
     
     def new_book(self, args):
