@@ -7,3 +7,7 @@ Projekt se skládá z několika souborů
 - `gui.py` obsahující třídu uživatelského rozhraní
 - `manage_books.py` obsahuje funkce, metody a třídy pro uprávu, načítání a operace s třídnickými knihami
 - složka `/tridni_knihy`ve které jsou ukládány jak třídnické knihy ve formátu `.json` tak soubor s unikátními `usernames`
+
+# Důležité
+
+Je potřeba změnit základní cestu `GLOBAL_LOCATION = "/Users/stepankovacic/skola/code/zaverecny_projekt_ZPRO_FJFI/tridni_knihy/"` v `config.py` na vlastní cestu.
