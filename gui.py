@@ -29,10 +29,12 @@ class Gui:
         self.refresh_page()
 
     def browser_viewer(self, class_name): 
-        print("\n") 
+        if os.name == 'nt':
+            print("Tento program nepodporuje prohlížení třídní knihy na platformě Windows")
+            self.refresh_page()
 
         print(f"Vytváří se  náhled třídní knihy {self.colored_text(class_name[0], 'purple')}")
-        print(*class_name)
+        
         loaded_class_book = manage_books.load_class_book(*class_name) 
         unparsed_table_string= ""
         for student in loaded_class_book["students"]:
@@ -297,3 +299,5 @@ class Gui:
         self.list_all_class_books()
 
 
+if __name__ == "__main__":
+    gui = Gui()
