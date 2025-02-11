@@ -160,7 +160,8 @@ class Gui:
                         print("-" * 29)
                         for k, v in marks_of_user.items():
                             print("{:<20}|{:>8}".format(k, v))
-                        print(f"\nAritmetický průměr známek žáka {self.colored_text(username, 'purple')} je {self.colored_text(str(round(sum(marks_of_user.values())/len(marks_of_user), 2)), 'purple')}")
+                        if len(marks_of_user) != 0:
+                            print(f"\nAritmetický průměr známek žáka {self.colored_text(username, 'purple')} je {self.colored_text(str(round(sum(marks_of_user.values())/len(marks_of_user), 2)), 'purple')}")
         self.refresh_page()
 
     def list_all_class_books(self):
