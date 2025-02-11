@@ -74,17 +74,31 @@ class student_record:
         if not self.card["class_name"] + ".json" in list_all_class_books():
             return 0
         else:
+            replacing_special_character_table = {"á":"a", "č":"c", "ď":"d", "éě":"e", "í":"i", "ň":"n", "ó":"o", "ř":"r", "š":"s", "ť":"t", "úů":"u", "ý":"y", "ž":"z"}
+
             name_index = 1
             all_students = list_names_of_all_students()
             name = self.card["student_first_name"]
+            decapitalised_name = name.lower()
             lastname = self.card["student_last_name"]
+            decapitalised_lastname = lastname.lower()
+            for i in replacing_special_character_table:
+                for j in i:
+                    decapitalised_name = decapitalised_name.replace(j, replacing_special_character_table[i])
+                    decapitalised_lastname = decapitalised_lastname.replace(j, replacing_special_character_table[i])
+            
+            decapitalised_lastname = decapitalised_lastname[:5]
+            decapitalised_name = decapitalised_name[:2]
+
+
             while True:
-                if name + lastname + str(name_index) in all_students:
+                
+                if decapitalised_lastname + decapitalised_name + str(name_index) in all_students:
                     name_index += 1
                     continue
                 else:
-                    self.card["username"] = name + lastname + str(name_index)
-                    all_students.append(name + lastname + str(name_index))
+                    self.card["username"] = decapitalised_lastname + decapitalised_name + str(name_index)
+                    all_students.append(decapitalised_lastname + decapitalised_name + str(name_index))
                     with open(GLOBAL_LOCATION + "all_students.json", "w") as a:
                         a.write(json.dumps(all_students, ensure_ascii=False))
                     break
@@ -137,4 +151,6 @@ def give_mark( username, mark, activity_name, class_name):
 
 
 if __name__ == "__main__":
-    pass
+    a = class_book("1a", "Petr", "Lubomír")
+    a.write_class_book()
+    create_student("Jitka", "Nováková", "12.2.2000", "1a")

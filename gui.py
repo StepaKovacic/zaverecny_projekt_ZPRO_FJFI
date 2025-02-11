@@ -57,7 +57,7 @@ class Gui:
         fully_templated_html = f"""
         <!DOCTYPE html>
         <html lang="en">
-
+        <meta charset="UTF-8">
         <head>
             <title>Třídní kniha - náhled</title>
             <style>
@@ -179,11 +179,24 @@ class Gui:
         help_string = "Pro nápovědu napište \"napoveda\" | Pro odchod napište \"konec\""
         print('\x1b[6;30;42m' + help_string  + (self.t_size[1]  - len(help_string)) * " " + '\033[0m')
         input_str = input("Zadejte příkaz: ")
+        
+        
+        x = [i for i in input_str.split("\"") if i not in ["", " ", "\n"]]
+        list_of_args = []
+        for i in x :
+            if f"\"{i}\"" not in input_str:
+                list_of_args += i.split(" ")
+            else:
+                list_of_args.append(i)
+        
+
+        list_of_args = [i for i in list_of_args if i not in ["", " ", "\n"]]
+        
         if input_str == "":
             print("\n")
             print(self.colored_text("Nebyl zadán žádný příkaz", "red"))
             self.refresh_page()
-        list_of_args = [i for i in input_str.split(" ") if i != ""]
+        
         func_name = list_of_args[0]
         args = list_of_args[1:]
         try: 

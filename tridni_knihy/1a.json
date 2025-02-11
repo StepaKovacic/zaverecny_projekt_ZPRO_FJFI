@@ -1,34 +1,14 @@
 {
   "class_name": "1a",
-  "name_of_teacher": "Jan Novotný",
+  "name_of_teacher": "Petr Lubomír",
   "students": {
-    "PavelDvořák1": {
-      "student_first_name": "Pavel",
-      "student_last_name": "Dvořák",
-      "username": "PavelDvořák1",
-      "date_of_birth": "3.5.2005",
-      "class_name": "1a"
-    },
-    "ŠimonDlouhý1": {
-      "student_first_name": "Šimon",
-      "student_last_name": "Dlouhý",
-      "username": "ŠimonDlouhý1",
-      "date_of_birth": "2.4.2004",
+    "novakji1": {
+      "student_first_name": "Jitka",
+      "student_last_name": "Nováková",
+      "username": "novakji1",
+      "date_of_birth": "12.2.2000",
       "class_name": "1a"
     }
   },
-  "marks": {
-    "test": {
-      "PavelDvořák1": "1"
-    },
-    "diktát": {
-      "PavelDvořák1": "2"
-    },
-    "psaní": {
-      "PavelDvořák1": "2.5"
-    },
-    "lumírovci": {
-      "ŠimonDlouhý1": "2"
-    }
-  }
+  "marks": {}
 }

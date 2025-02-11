@@ -1,4 +1,7 @@
-GLOBAL_LOCATION = "/Users/stepankovacic/skola/code/zaverecny_projekt_ZPRO_FJFI/tridni_knihy/"
+import os 
+
+GLOBAL_LOCATION = os.path.split(os.path.abspath(__file__))[0] + "/tridni_knihy/"
+
 
 GLOBAL_STUDENT_JSON_STRUCTURE = {"student_first_name":None, 
                                  "student_last_name":None, 
