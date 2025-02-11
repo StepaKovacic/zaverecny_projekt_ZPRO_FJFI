@@ -24,7 +24,7 @@ class Gui:
         welcome_str = "Vítejte v programu pro správu třídních knih"
         heading_str = "Autor: Štěpán Kovačič"
         print(indentation)
-        self.print_centered_text(self.colored_text(welcome_str, "purple"), self.colored_text(heading_str, "green"))
+        self.print_centered_text(self.colored_text(welcome_str, 'purple'), self.colored_text(heading_str, "green"))
         print("\n"*(self.t_size[0]-2 - (2 +(self.t_size[0]//2) )))
         self.refresh_page()
 
@@ -142,7 +142,7 @@ class Gui:
     def student_info(self, username):
         username = username[0] 
 
-        print(f"\n\tInfo o studentovi {self.colored_text(username, "purple")}")
+        print(f"\n\tInfo o studentovi {self.colored_text(username, 'purple')}")
         all_books = manage_books.list_all_class_books()
         for iter_book in all_books: 
             with open(config.GLOBAL_LOCATION + iter_book, "r") as class_book_json:
@@ -158,7 +158,7 @@ class Gui:
                         print("-" * 29)
                         for k, v in marks_of_user.items():
                             print("{:<20}|{:>8}".format(k, v))
-                        print(f"\nAritmetický průměr známek žáka {self.colored_text(username, "purple")} je {self.colored_text(str(round(sum(marks_of_user.values())/len(marks_of_user), 2)), "purple")}")
+                        print(f"\nAritmetický průměr známek žáka {self.colored_text(username, 'purple')} je {self.colored_text(str(round(sum(marks_of_user.values())/len(marks_of_user), 2)), 'purple')}")
         self.refresh_page()
 
     def list_all_class_books(self):
@@ -296,4 +296,4 @@ class Gui:
         # manage_books.create_class_book(*args)
         self.list_all_class_books()
 
-x = Gui()
+
