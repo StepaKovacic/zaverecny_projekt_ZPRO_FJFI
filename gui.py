@@ -29,9 +29,7 @@ class Gui:
         self.refresh_page()
 
     def browser_viewer(self, class_name): 
-        if os.name == 'nt':
-            print("Tento program nepodporuje prohlížení třídní knihy na platformě Windows")
-            self.refresh_page()
+        
 
         print(f"Vytváří se  náhled třídní knihy {self.colored_text(class_name[0], 'purple')}")
         
@@ -120,12 +118,15 @@ class Gui:
         </html>
         """
        
-        with open(config.GLOBAL_LOCATION + "classbook.html", "w") as classbook:
+        with open(config.GLOBAL_LOCATION + "classbook.html", "w", encoding="utf-8") as classbook:
             classbook.write(fully_templated_html) 
-        
-        command = os.popen(f'open {config.GLOBAL_LOCATION}classbook.html')
-        command.read()
-        command.close()
+        if os.name == 'nt':
+            os.startfile(config.GLOBAL_LOCATION + "classbook.html")
+        else:
+            command = os.popen(f'open {config.GLOBAL_LOCATION}classbook.html')
+            command.read()
+            command.close()
+
         self.refresh_page()
 
     def create_student(self, args):
