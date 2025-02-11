@@ -153,4 +153,4 @@ def give_mark( username, mark, activity_name, class_name):
 if __name__ == "__main__":
     # a = class_book("1a", "Petr", "Lubomír")
     # a.write_class_book()
-    create_student("Lucie", "Vánksá", "12.2.2000", "Septima B")
+    create_student("Lucie", "Vánksá", "12.2.2000", "ZPRO 1")
